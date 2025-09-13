@@ -31,7 +31,9 @@ class MongoUserRepository(AbstractUserRepository):
         Returns:
             The User object if found, otherwise None.
         """
-        user_document = await self.document_model.find_one(UserDocument.id == user_id)
+        user_document = await self.document_model.find_one(
+            UserDocument.id == ObjectId(user_id)
+        )
         if not user_document:
             return None
         properties = UserProperties(
@@ -74,7 +76,9 @@ class MongoUserRepository(AbstractUserRepository):
         Returns:
             The updated User object if successful, otherwise None.
         """
-        user_document = await self.document_model.find_one(UserDocument.id == user_id)
+        user_document = await self.document_model.find_one(
+            UserDocument.id == ObjectId(user_id)
+        )
         if not user_document:
             return None
 
@@ -95,7 +99,9 @@ class MongoUserRepository(AbstractUserRepository):
         Returns:
             The deleted User object if successful, otherwise None.
         """
-        user_document = await self.document_model.find_one(UserDocument.id == user_id)
+        user_document = await self.document_model.find_one(
+            UserDocument.id == ObjectId(user_id)
+        )
         if not user_document:
             return None
         await user_document.delete()  # type: ignore

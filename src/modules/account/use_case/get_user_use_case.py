@@ -21,7 +21,7 @@ class GetUserUseCase:
 
     user_repository: AbstractUserRepository
 
-    async def execute(self, query: GetUserQuery) -> User | None:
+    async def execute(self, query: GetUserQuery) -> User :
         """Execute the use case to retrieve a user.
 
         Args:
@@ -29,5 +29,11 @@ class GetUserUseCase:
 
         Returns:
             User if found, None otherwise
+
+        Raises:
+            ValueError: If the user with the given ID is not found.
         """
-        return await self.user_repository.get_user_by_id(query.user_id)
+        persisted_user = await self.user_repository.get_user_by_id(query.user_id)
+        if not persisted_user:
+            raise ValueError(f"User with ID {query.user_id} not found")
+        return persisted_user

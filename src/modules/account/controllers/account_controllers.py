@@ -195,15 +195,9 @@ class UserController(Controller):
 
         Returns:
             UserRead: Complete user information for the requested user
-
-        Raises:
-            NotFoundException: When the user with the specified ID is not found
         """
         query = GetUserQuery(user_id=user_id)
         domain_user = await get_user_use_case.execute(query)
-
-        if domain_user is None:
-            raise NotFoundException(f"User with ID '{user_id}' not found")
 
         return UserRead(
             name=domain_user.name.value,
