@@ -1,0 +1,14 @@
+{
+    "python.testing.pytestArgs": [
+        "src"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.envFile": "${workspaceFolder}/.env",
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/.ruff_cache": true,
+        "**/.pytest_cache": true,
+        "**/.mypy_cache": true
+    }
+}
