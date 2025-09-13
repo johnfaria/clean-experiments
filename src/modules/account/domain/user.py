@@ -8,6 +8,8 @@ from dataclasses import dataclass
 from typing import TypedDict
 from uuid import UUID
 
+from bson import ObjectId
+
 from src.modules.core.domain.entity import Entity
 from src.modules.account.domain.value_objects.name import Name
 from src.modules.account.domain.value_objects.age import Age
@@ -68,7 +70,7 @@ class User(Entity):
         return user
 
     @classmethod
-    def restore(cls, user_id: UUID, properties: UserProperties) -> "User":
+    def restore(cls, user_id: ObjectId, properties: UserProperties) -> "User":
         """Restore a User instance with existing ID.
 
         Args:

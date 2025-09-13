@@ -6,7 +6,8 @@ representing important business events that occur during user operations.
 
 from dataclasses import dataclass
 from datetime import datetime
-from uuid import UUID
+
+from bson import ObjectId
 from src.modules.core.domain.domain_event import DomainEvent
 
 
@@ -29,7 +30,7 @@ class UserCreated(DomainEvent):
 
     @classmethod
     def create(
-        cls, aggregate_id: UUID, name: str, email: str, age: int
+        cls, aggregate_id: ObjectId, name: str, email: str, age: int
     ) -> "UserCreated":
         """Create a UserCreated event with current timestamp.
 
@@ -68,7 +69,7 @@ class UserEmailChanged(DomainEvent):
 
     @classmethod
     def create(
-        cls, aggregate_id: UUID, old_email: str, new_email: str
+        cls, aggregate_id: ObjectId, old_email: str, new_email: str
     ) -> "UserEmailChanged":
         """Create a UserEmailChanged event with current timestamp.
 

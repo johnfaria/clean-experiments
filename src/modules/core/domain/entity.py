@@ -3,6 +3,8 @@
 from typing import override
 from uuid import UUID, uuid4
 from dataclasses import dataclass, field
+
+from bson import ObjectId
 from .domain_event import DomainEvent
 
 
@@ -34,7 +36,7 @@ class Entity:
         ```
     """
 
-    id: UUID = field(default_factory=uuid4, init=False)
+    id: ObjectId = field(default_factory=ObjectId, init=False)
     _domain_events: list[DomainEvent] = field(default_factory=list, init=False)
 
     def add_domain_event(self, event: DomainEvent) -> None:

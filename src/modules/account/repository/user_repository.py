@@ -10,7 +10,7 @@ class AbstractUserRepository(ABC):
     """Abstract methods for user repository operations."""
 
     @abstractmethod
-    def get_user_by_id(self, user_id: str) -> User | None:
+    async def get_user_by_id(self, user_id: str) -> User | None:
         """Get a user by their ID."""
         pass
 
@@ -20,17 +20,17 @@ class AbstractUserRepository(ABC):
         pass
 
     @abstractmethod
-    def update_user(self, user_id: str, user_data: User) -> User | None:
+    async def update_user(self, user_id: str, user_data: User) -> User | None:
         """Update an existing user."""
         pass
 
     @abstractmethod
-    def delete_user(self, user_id: str) -> User | None:
+    async def delete_user(self, user_id: str) -> None:
         """Delete a user by their ID."""
         pass
 
 
-class InMemoryUserRepository(AbstractUserRepository):
+class MongoUserRepository(AbstractUserRepository):
     """In-memory implementation of the user repository."""
 
     def __init__(self):
@@ -38,7 +38,7 @@ class InMemoryUserRepository(AbstractUserRepository):
         self.users: dict[str, User] = {}
 
     @override
-    def get_user_by_id(self, user_id: str) -> User | None:
+    async def get_user_by_id(self, user_id: str) -> User | None:
         """Get a user by their ID.
 
         Args:
@@ -63,7 +63,7 @@ class InMemoryUserRepository(AbstractUserRepository):
         return user_data
 
     @override
-    def update_user(self, user_id: str, user_data: User) -> User | None:
+    async def update_user(self, user_id: str, user_data: User) -> User | None:
         """Update an existing user.
 
         Args:
@@ -79,13 +79,10 @@ class InMemoryUserRepository(AbstractUserRepository):
         return None
 
     @override
-    def delete_user(self, user_id: str) -> User | None:
+    async def delete_user(self, user_id: str) -> None:
         """Delete a user by their ID.
 
         Args:
             user_id: The ID of the user to delete.
-
-        Returns:
-            The deleted User object if the user existed, otherwise None.
         """
-        return self.users.pop(user_id, None)
+        _ = self.users.pop(user_id, None)

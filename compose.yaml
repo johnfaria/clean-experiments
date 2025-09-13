@@ -1,0 +1,10 @@
+services:
+  mongodb:
+    image: bitnami/mongodb:latest
+    platform: linux/amd64
+    container_name: mongo-todo
+    environment:
+      - MONGODB_ROOT_PASSWORD=secret
+    ports:
+      - 27017:27017
+    restart: unless-stopped

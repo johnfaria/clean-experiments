@@ -9,6 +9,8 @@ from dataclasses import dataclass
 from datetime import datetime
 from uuid import UUID
 
+from bson import ObjectId
+
 
 @dataclass(frozen=True)
 class DomainEvent(ABC):
@@ -23,5 +25,5 @@ class DomainEvent(ABC):
         event_version: Version of the event schema for evolution support.
     """
 
-    aggregate_id: UUID
+    aggregate_id: ObjectId
     occurred_at: datetime
