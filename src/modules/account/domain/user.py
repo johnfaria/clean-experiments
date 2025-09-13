@@ -6,7 +6,6 @@ logic for user-related operations such as age validation.
 
 from dataclasses import dataclass
 from typing import TypedDict
-from uuid import UUID
 
 from bson import ObjectId
 

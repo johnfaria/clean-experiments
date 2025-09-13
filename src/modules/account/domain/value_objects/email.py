@@ -6,6 +6,7 @@ for user email addresses in the domain.
 
 import re
 from dataclasses import dataclass
+from typing import override
 
 
 @dataclass(frozen=True)
@@ -55,6 +56,7 @@ class Email:
         """
         return self.value.split("@")[0]
 
+    @override
     def __str__(self) -> str:
         """Return the string representation of the email."""
         return self.value

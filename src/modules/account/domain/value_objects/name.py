@@ -5,6 +5,7 @@ for user names in the domain.
 """
 
 from dataclasses import dataclass
+from typing import override
 
 
 @dataclass(frozen=True)
@@ -35,6 +36,7 @@ class Name:
         if len(self.value) > 100:
             raise ValueError("Name cannot exceed 100 characters")
 
+    @override
     def __str__(self) -> str:
         """Return the string representation of the name."""
         return self.value

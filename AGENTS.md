@@ -5,8 +5,9 @@
 - **Run single test**: `pytest path/to/test_file.py::TestClass::test_method`
 - **Format code**: `task format` (ruff format)
 - **Lint code**: `task lint` (ruff check)
-- **Type check**: `task typing` (mypy src)
+- **Mypy type check**: `task typing` (mypy src)
 - **Run dev server**: `task dev` (composition root)
+- **Basedpyright type check** `task basedpyright` (basedpyright src)
 
 ## Code Style Guidelines
 - **Python version**: >=3.13

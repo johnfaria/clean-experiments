@@ -5,6 +5,7 @@ for user ages in the domain.
 """
 
 from dataclasses import dataclass
+from typing import override
 
 
 @dataclass(frozen=True)
@@ -40,6 +41,7 @@ class Age:
         """
         return self.value >= 18
 
+    @override
     def __str__(self) -> str:
         """Return the string representation of the age."""
         return str(self.value)
