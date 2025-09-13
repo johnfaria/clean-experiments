@@ -1,7 +1,7 @@
 """Account Controllers Module."""
 
 from typing import Annotated, final
-from litestar import Controller, post, get
+from litestar import Controller, post, get, put, delete
 
 from dataclasses import dataclass
 from litestar.dto import DataclassDTO
@@ -11,6 +11,10 @@ from src.modules.account.use_case.create_user_use_case import (
     CreateUserCommand,
     CreateUserUseCase,
 )
+from src.modules.account.use_case.delete_user_use_case import (
+    DeleteUserCommand,
+    DeleteUserUseCase,
+)
 from src.modules.account.use_case.get_user_use_case import (
     GetUserQuery,
     GetUserUseCase,
@@ -18,6 +22,10 @@ from src.modules.account.use_case.get_user_use_case import (
 from litestar.di import Provide
 from litestar.exceptions import NotFoundException
 from src.container import container
+from src.modules.account.use_case.update_user_use_case import (
+    UpdateUserCommand,
+    UpdateUserUseCase,
+)
 
 
 @dataclass
@@ -51,6 +59,22 @@ class UserRead:
 
 
 UserReadDTO = DataclassDTO[UserRead]
+
+
+@dataclass
+class UserUpdate:
+    """User data for update.
+
+    This represents the input data required to update an existing user in the system.
+    All fields are optional and will be validated according to business rules.
+    """
+
+    name: str | None = None
+    age: int | None = None
+    email: str | None = None
+
+
+UserUpdateDTO = DataclassDTO[UserUpdate]
 
 
 @final
@@ -135,6 +159,7 @@ class UserController(Controller):
 
     @get(
         "/{user_id:str}",
+        dto=UserUpdateDTO,
         return_dto=UserReadDTO,
         summary="Get User by ID",
         description="""
@@ -186,3 +211,96 @@ class UserController(Controller):
             email=domain_user.email.value,
             user_id=str(domain_user.id),
         )
+
+    @put(
+        "/{user_id:str}",
+        summary="Update User by ID",
+        description="""
+        Updates user information for the specified user ID.
+
+        This endpoint allows modification of user details such as name, age, and email.
+        All fields are optional; only provided fields will be updated. Input data is validated
+        according to business rules before applying changes.
+
+        **Business Rules:**
+        - Name, if provided, must be between 2 and 100 characters
+        - Age, if provided, must be between 18 and 120 years
+        - Email, if provided, must be unique and in valid format
+
+        **Authorization:** Requires valid authentication token.
+        **Rate Limiting:** Standard rate limits apply.
+        **Error Handling:** Returns 404 if user is not found, 400 for validation errors.
+        """,
+        operation_id="update_user",
+        dependencies={
+            "update_user_use_case": Provide(
+                lambda: container[UpdateUserUseCase], sync_to_thread=False
+            ),
+        },
+    )
+    async def update_user(
+        self, user_id: str, data: UserUpdate, update_user_use_case: UpdateUserUseCase
+    ) -> UserRead:
+        """Update user information by ID.
+
+        This endpoint is a placeholder for future implementation of user updates.
+        It will allow modification of user details such as name, age, and email.
+
+        Args:
+            user_id: The unique identifier of the user to update
+            data: The updated user information
+            update_user_use_case: Injected use case for user update business logic
+
+        Returns:
+            UserRead: Complete updated user information
+
+        """
+        command = UpdateUserCommand(
+            user_id=user_id, name=data.name, age=data.age, email=data.email
+        )
+        updated_user = await update_user_use_case.execute(command)
+        return UserRead(
+            name=updated_user.name.value,
+            age=updated_user.age.value,
+            email=updated_user.email.value,
+            user_id=str(updated_user.id),
+        )
+
+    @delete(
+        "/{user_id:str}",
+        summary="Delete User by ID",
+        description="""
+        Deletes a user by their unique identifier.
+
+        This endpoint removes the user record from the system if it exists.
+        If the user is not found, a 404 error will be returned.
+
+        **Authorization:** Requires valid authentication token.
+        **Rate Limiting:** Standard rate limits apply.
+        **Error Handling:** Returns 404 if user is not found.
+        """,
+        operation_id="delete_user",
+        dependencies={
+            "delete_user_use_case": Provide(
+                lambda: container[DeleteUserUseCase], sync_to_thread=False
+            ),
+        },
+    )
+    async def delete_user(
+        self, user_id: str, delete_user_use_case: DeleteUserUseCase
+    ) -> None:
+        """Delete a user by their ID.
+
+        This endpoint is a placeholder for future implementation of user deletion.
+        It will remove the user record from the system.
+
+        Args:
+            user_id: The unique identifier of the user to delete
+            delete_user_use_case: Injected use case for user deletion business logic
+
+        Returns:
+            None
+        """
+        command = DeleteUserCommand(user_id=user_id)
+        await delete_user_use_case.execute(command)
+        return None

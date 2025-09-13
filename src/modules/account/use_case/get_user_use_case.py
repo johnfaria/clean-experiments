@@ -30,4 +30,4 @@ class GetUserUseCase:
         Returns:
             User if found, None otherwise
         """
-        return self.user_repository.get_user_by_id(query.user_id)
+        return await self.user_repository.get_user_by_id(query.user_id)

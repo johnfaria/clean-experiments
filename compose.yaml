@@ -2,7 +2,7 @@ services:
   mongodb:
     image: bitnami/mongodb:latest
     platform: linux/amd64
-    container_name: mongo-todo
+    container_name: mongo-clean-experiments
     environment:
       - MONGODB_ROOT_PASSWORD=secret
     ports:
