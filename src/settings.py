@@ -1,9 +1,9 @@
 """Server configuration."""
 
 import os
-
 from dataclasses import dataclass
 from functools import lru_cache
+
 from dotenv import load_dotenv
 
 _ = load_dotenv()
@@ -11,7 +11,7 @@ _ = load_dotenv()
 
 @dataclass()
 class Settings:
-    """Get settingd from environment variables."""
+    """Get settings from environment variables."""
 
     MONGO_URI: str = os.environ["MONGO_URI"]
     MONGO_PASSWORD: str = os.environ["MONGO_PASSWORD"]

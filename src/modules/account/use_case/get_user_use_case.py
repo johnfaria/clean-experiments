@@ -21,7 +21,7 @@ class GetUserUseCase:
 
     user_repository: AbstractUserRepository
 
-    async def execute(self, query: GetUserQuery) -> User :
+    async def execute(self, query: GetUserQuery) -> User:
         """Execute the use case to retrieve a user.
 
         Args:

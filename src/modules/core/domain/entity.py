@@ -1,10 +1,10 @@
 """Domain entity base class with identity and domain event support."""
 
-from typing import override
-from uuid import UUID, uuid4
 from dataclasses import dataclass, field
+from typing import override
 
 from bson import ObjectId
+
 from .domain_event import DomainEvent
 
 
@@ -16,7 +16,7 @@ class Entity:
     Two entities with the same ID are considered equal, even if their other attributes differ.
 
     This base class provides:
-    - Automatic UUID generation for entity identity
+    - Automatic ObjectId generation for entity identity
     - Domain event collection and management
     - Proper equality and hashing based on identity
 

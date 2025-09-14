@@ -4,18 +4,22 @@ This module serves as the composition root for the application, demonstrating
 the creation and usage of User entities with domain-specific functionality.
 """
 
-from litestar import Litestar, Router
-from src.modules.account.controllers.account_controllers import UserController
-from src.settings import CONFIG
-from motor.motor_asyncio import AsyncIOMotorClient
 from beanie import init_beanie
+from pymongo.asynchronous.database import AsyncDatabase
+from litestar import Litestar, Router
+from motor.motor_asyncio import AsyncIOMotorClient
+
+from typing import cast
+from src.modules.account.controllers.account_controllers import UserController
 from src.modules.core.infra.documents.user_document import UserDocument
+from src.settings import CONFIG
 
 
 async def on_startup() -> None:
-    """On startup event handler to initialize database connection and Beanie."""
-    client = AsyncIOMotorClient(CONFIG.MONGO_URI)
-    await init_beanie(database=client.dev, document_models=[UserDocument])
+    """Initialize database connections and document models on application startup."""
+    client: AsyncIOMotorClient = AsyncIOMotorClient(CONFIG.MONGO_URI)
+    database: AsyncDatabase = cast(AsyncDatabase, client[CONFIG.MONGO_DATABASE])
+    await init_beanie(database=database, document_models=[UserDocument])
 
 
 def create_app() -> Litestar:
