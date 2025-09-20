@@ -9,11 +9,11 @@ from typing import TypedDict
 
 from bson import ObjectId
 
-from src.modules.core.domain.entity import Entity
-from src.modules.account.domain.value_objects.name import Name
+from src.modules.account.domain.events import UserCreated, UserEmailChanged
 from src.modules.account.domain.value_objects.age import Age
 from src.modules.account.domain.value_objects.email import Email
-from src.modules.account.domain.events import UserCreated, UserEmailChanged
+from src.modules.account.domain.value_objects.name import Name
+from src.modules.core.domain.entity import Entity
 
 
 class UserProperties(TypedDict):

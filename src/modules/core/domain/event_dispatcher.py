@@ -5,6 +5,7 @@ to registered handlers, enabling decoupled event-driven architecture.
 """
 
 from typing import Protocol
+
 from src.modules.core.domain.domain_event import DomainEvent
 
 

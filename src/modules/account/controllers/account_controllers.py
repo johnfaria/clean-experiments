@@ -1,12 +1,15 @@
 """Account Controllers Module."""
 
-from typing import Annotated, final
-from litestar import Controller, post, get, put, delete
-
 from dataclasses import dataclass
+from typing import Annotated, final
+
+from litestar import Controller, delete, get, post, put
+from litestar.di import Provide
 from litestar.dto import DataclassDTO
+from litestar.exceptions import NotFoundException
 from litestar.params import Body
 
+from src.container import container
 from src.modules.account.use_case.create_user_use_case import (
     CreateUserCommand,
     CreateUserUseCase,
@@ -19,9 +22,6 @@ from src.modules.account.use_case.get_user_use_case import (
     GetUserQuery,
     GetUserUseCase,
 )
-from litestar.di import Provide
-from litestar.exceptions import NotFoundException
-from src.container import container
 from src.modules.account.use_case.update_user_use_case import (
     UpdateUserCommand,
     UpdateUserUseCase,

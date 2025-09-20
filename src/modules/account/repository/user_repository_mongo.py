@@ -1,11 +1,13 @@
 """MongoDB implementation of the User Repository."""
 
+from typing import override
+
+from beanie import PydanticObjectId
 from bson import ObjectId
+
 from src.modules.account.domain.user import User, UserProperties
 from src.modules.account.repository.user_repository import AbstractUserRepository
 from src.modules.core.infra.documents.user_document import UserDocument
-from typing import override
-from beanie import PydanticObjectId
 
 
 class FailedToCreateUser(Exception):

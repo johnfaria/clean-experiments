@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from datetime import datetime
 
 from bson import ObjectId
+
 from src.modules.core.domain.domain_event import DomainEvent
 
 

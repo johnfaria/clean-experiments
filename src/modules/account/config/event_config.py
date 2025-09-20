@@ -4,13 +4,13 @@ This module provides a more advanced approach to event handler
 registration using a configuration class pattern.
 """
 
-from src.modules.core.domain.event_dispatcher import EventDispatcher
-from src.modules.account.handlers.user_handlers import (
-    UserNotificationHandler,
-    UserAuditHandler,
-    UserAnalyticsHandler,
-)
 from src.modules.account.domain.events import UserCreated, UserEmailChanged
+from src.modules.account.handlers.user_handlers import (
+    UserAnalyticsHandler,
+    UserAuditHandler,
+    UserNotificationHandler,
+)
+from src.modules.core.domain.event_dispatcher import EventDispatcher
 
 
 class EventConfiguration:

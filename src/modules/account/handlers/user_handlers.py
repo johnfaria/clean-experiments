@@ -5,10 +5,11 @@ implementing specific business logic that should occur
 when user events are raised.
 """
 
-from typing import overload, override
+from typing import override
+
+from src.modules.account.domain.events import UserCreated, UserEmailChanged
 from src.modules.core.domain.domain_event import DomainEvent
 from src.modules.core.domain.event_dispatcher import EventHandler
-from src.modules.account.domain.events import UserCreated, UserEmailChanged
 
 
 class UserNotificationHandler(EventHandler):

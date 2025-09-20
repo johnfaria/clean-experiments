@@ -4,12 +4,13 @@ This module serves as the composition root for the application, demonstrating
 the creation and usage of User entities with domain-specific functionality.
 """
 
+from typing import cast
+
 from beanie import init_beanie
-from pymongo.asynchronous.database import AsyncDatabase
 from litestar import Litestar, Router
 from motor.motor_asyncio import AsyncIOMotorClient
+from pymongo.asynchronous.database import AsyncDatabase
 
-from typing import cast
 from src.modules.account.controllers.account_controllers import UserController
 from src.modules.core.infra.documents.user_document import UserDocument
 from src.settings import CONFIG

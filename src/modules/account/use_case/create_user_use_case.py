@@ -2,10 +2,10 @@
 
 from dataclasses import dataclass
 
+from src.modules.account.domain.user import User, UserProperties
 from src.modules.account.repository.user_repository import (
     AbstractUserRepository,
 )
-from src.modules.account.domain.user import User, UserProperties
 from src.modules.core.domain.event_dispatcher import EventDispatcher
 
 
