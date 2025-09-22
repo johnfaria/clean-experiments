@@ -4,9 +4,7 @@ This module serves as the composition root for the application, demonstrating
 the creation and usage of User entities with domain-specific functionality.
 """
 
-from typing import cast
-
-from beanie import init_beanie
+from beanie import init_beanie  # pyright: ignore[reportUnknownVariableType]
 from litestar import Litestar, Router
 from motor.motor_asyncio import AsyncIOMotorClient
 from pymongo.asynchronous.database import AsyncDatabase
@@ -18,9 +16,9 @@ from src.settings import CONFIG
 
 async def on_startup() -> None:
     """Initialize database connections and document models on application startup."""
-    client: AsyncIOMotorClient = AsyncIOMotorClient(CONFIG.MONGO_URI)
-    database: AsyncDatabase = cast(AsyncDatabase, client[CONFIG.MONGO_DATABASE])
-    await init_beanie(database=database, document_models=[UserDocument])
+    client = AsyncIOMotorClient(CONFIG.MONGO_URI)  # pyright: ignore[reportUnknownVariableType]
+    database = client[CONFIG.MONGO_DATABASE]  # pyright: ignore[reportUnknownVariableType]
+    await init_beanie(database=database, document_models=[UserDocument])  # pyright: ignore[reportArgumentType]
 
 
 def create_app() -> Litestar:
